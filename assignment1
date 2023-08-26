@@ -1,3 +1,10 @@
+1.db.employees.updateMany({ Desg: "CLERK" }, { $set: { Desg: "AO" } });
+2.db.employees.updateMany({ Desg: "Analyst", "project.name" : "Project-1" }, { $set: {"project.$.Hrs" :5} });
+3.db.employees.updateMany({ ename: /^Deep/i },{ $push:{project:{ $each: [{name :"project-3", Hrs:2 }, {name :"project-4", Hrs:3 }]}}});
+4.db.employees.updateMany({sal:{$gt:50000}},{$inc:{bonus:2000}});
+db.employees.updateMany({sal:{$lt:50000, $gt:30000}},{$inc:{bonus:1500}});
+db.employees.updateMany({sal:{$gt:30000}},{$inc:{bonus:1000}});
+5.db.employees.updateMany({"mgr.name": "Satish" }, {$set:{"mgr.name" :"Tushar", "mgr.num" : 3333}});
 6. db.employees.updateMany({"dept.dname": "Purchase" }, { $inc:{sal:15000}});
 7. db.employees.updateMany({"project.name" : "project-2"},{ $inc: {"project.$.Hrs": -2}});
 8. db.employees.updateMany({"project.name" : "project-2", "project.Hrs" :4 }, { $pull: { project: { name: "project-2"}}});

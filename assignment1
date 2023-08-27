@@ -1,29 +1,53 @@
 1.db.employees.updateMany({ Desg: "CLERK" }, { $set: { Desg: "AO" } });
+
 2.db.employees.updateMany({ Desg: "Analyst", "project.name" : "Project-1" }, { $set: {"project.$.Hrs" :5} });
+
 3.db.employees.updateMany({ ename: /^Deep/i },{ $push:{project:{ $each: [{name :"project-3", Hrs:2 }, {name :"project-4", Hrs:3 }]}}});
+
 4.db.employees.updateMany({sal:{$gt:50000}},{$inc:{bonus:2000}});
 db.employees.updateMany({sal:{$lt:50000, $gt:30000}},{$inc:{bonus:1500}});
 db.employees.updateMany({sal:{$gt:30000}},{$inc:{bonus:1000}});
+
 5.db.employees.updateMany({"mgr.name": "Satish" }, {$set:{"mgr.name" :"Tushar", "mgr.num" : 3333}});
+
 6. db.employees.updateMany({"dept.dname": "Purchase" }, { $inc:{sal:15000}});
+
 7. db.employees.updateMany({"project.name" : "project-2"},{ $inc: {"project.$.Hrs": -2}});
+
 8. db.employees.updateMany({"project.name" : "project-2", "project.Hrs" :4 }, { $pull: { project: { name: "project-2"}}});
+
 9.db.employee.updateMany({ sal: { $lt: 10000 } },{$set: { sal: 10000 }});
+
 10. db.employee.updateMany({  $or: [{ bonus: { $lt: 2000 } },{ sal: { $lt: 20000 } },{ "dept.dname": "Sales" } ] },{ $inc: { bonus: 500, sal: 1000 } });
-11. db.employee.updateMany({ $or: [{ bonus: { $lt: 2000 } },{ sal: { $lt: 20000 } }, { "dept.dname": "Sales" } ]},{$inc: { bonus: 500, sal: 1000 }});
+
+11. db.employee.updateMany({$or: [ { Desg: "Analyst", sal: { $in: [30000, 33000, 35000] } }]},{$push: { project: { $each: [{ name: "New-Project-1", Hrs: 0 }, { name: "New-Project-2", Hrs: 0 }], $position: 1 } }});
+
 12. db.employee.updateMany({ "dept.dname": "HR", "dept.dloc": "Mumbai" },{ $pop: { project: 1 } });
+
 13. db.employee.updateMany({ "project.name": "Project-1", "project.Hrs": 4 },{ $set: { Desg: "Senior Programmer" } });
+
 14.db.employee.updateMany({ $or: [ { "mgr.name": "Rajan" }, { "mgr.name": "Revati" } ] },{ $set: { hobbies: ["Hobby-1", "Hobby-2"] } });
+
 15.db.employee.updateMany({ $or: [{ "project.name": "Project-4", "project.Hrs": 3 },{ "project.name": "Project-3", "project.Hrs": 4 }] },
 {$set: { skillset: ["Skill-1", "Skill-2"] } });
-16.db.employee.updateMany({ ename: { $regex: "^[Rp].*[js]$" } },{ $push: { hobbies: { $each: ["blogging"], $position: 2 } } });
-17.db.employee.updateMany( { $or: [{ "project.name": "Project-1" }, { "project.name": "Project-2" },{ "project.name": "Project-3" }, { "dept.dloc": "Mumbai" } ]
-  }, { $inc: { sal: 10000, bonus: -1000 } });
-18.db.employee.updateMany({ "project.name": "Project-1" },{ $pull: { project: { name: "Project-1" } } });
+
+16.db.employee.updateMany({ ename: { $regex: "^[Rp].*[js]$" } },{ $push: { hobbies: { $each: ["blogging"], $position: 3 } } });
+
+17.db.employee.updateMany( { $or: [{ "project.name": "Project-1" }, { "project.name": "Project-2" },{ "project.name": "Project-3" }]}, { $inc: { sal: 10000, bonus: -1000 } });
+db.employee.updateMany({"dept.dloc": "Mumbai"}, { $inc: { sal: 10000, bonus: -1000 } });
+
+18.db.employee.updateMany({ "project.name": "Project-1" },{ $pull: {project: { name: "Project-1" } } });
+
 19.db.employee.replaceOne( { ename: "Deepak" },{ ename: "New Employee",emono: 999, // ... other fields ... });
+
 20. db.employee.updateMany({ skillset: "python" }, { $set: { "skillset.$": "python 3.8" } });
+
 21. db.employee.updateMany({ "dept.dloc": "Pune" },{ $push: { skillset: { $each: ["MongoDB", "Perl"] } } });
+
 22. db.employee.updateMany( { $or: [ { "project.name": "Project-1" }, { "project.name": "Project-2" } ] }, { $pop: { hobbies: -1 } });
+
 23. db.employee.updateMany({ "project.1.Hrs": 4 },{ $pop: { hobbies: 1 } });
+
 24. db.employee.updateMany({ skillset: { $in: ["Perl", "python"] } },{ $push: { project: { $each: [{ name: "New-Project-A", Hrs: 0 }, { name: "New-Project-B", Hrs: 0 }] } } });
+
 25. db.employee.updateMany({ "project.name": "Project-1", "project.Hrs": { $lt: 6 } }, { $set: { "project.$.Hrs": 6 } });
